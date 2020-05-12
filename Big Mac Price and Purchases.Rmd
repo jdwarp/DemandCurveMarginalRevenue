@@ -1,0 +1,98 @@
+---
+title: "BigMac"
+author: "Jaime Duran"
+date: "March 25, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+Get an estimated demand curve for Big Macs. Try to get elasticity demand
+
+```{r}
+BigMacdata = read.csv('Big Mac Price and Purchases.csv') 
+attach(BigMacdata)
+```
+
+plot the data 
+
+```{r}
+plot(demand~price)
+
+```
+
+fit demand line to these data
+
+```{r}
+priceOne = 4.00
+model1 = lm(demand~price)
+#summary(model1)
+plot(demand~price)
+abline(h = 2, col= "red")
+abline(model1)
+
+```
+
+price elasticity is the % change in quantity demanded divided by the % change in price 
+
+marginal revenue is the additional revenue earned by selling one more unit of that product
+
+MR = price * (1+elasticity)/elasticity
+
+Elasticity = E
+
+E = slope of demand at price P * (price/quantity)
+
+```{r}
+slope = model1$coefficients[2]
+intercept = model1$coefficients[1]
+demanded = (priceOne-intercept)/slope
+
+E = slope*priceOne/demanded
+
+MR = priceOne * abs((1+E)/E)
+print(paste('elasticity = ', round(E,2)))
+print(paste('MR = ', round(MR,2)))
+
+```
+
+Profit = price - cost = 4.0 - MC
+```{r}
+profit = priceOne - MR
+print(paste('profit = ', profit))
+
+```
+
+## Solution
+Estimated Demand Curve for Big Macs
+- This graph demonstrates price points on the x axis and the demand for Big Macs per customer is represented by along the y axis. 
+
+```{r}
+priceOne = 4.00
+model1 = lm(demand~price)
+#summary(model1)
+plot(demand~price)
+abline(h = 2, col= "red")
+abline(model1)
+```
+
+
+The Elasticity Demand for Big Macs is -0.67, which means that for each increment in price by a full dollar, you could expect to sell 67% less Big Macs. Since the Marginal Revenue for selling one more big mac is 1.98, it may be most convinient to sell each Big Mac for 6 or 7 dollars to satisfy demand while controlling the amount of outgoing product. The range between 5 and 8 dollars represents the price at which customers would buy more than one Big Mac for the highest price.
+
+
+```{r}
+slope = model1$coefficients[2]
+intercept = model1$coefficients[1]
+demanded = (priceOne-intercept)/slope
+
+E = slope*priceOne/demanded
+
+MR = priceOne * abs((1+E)/E)
+print(paste('elasticity = ', round(E,2)))
+print(paste('MR = ', round(MR,2)))
+```
+
+
